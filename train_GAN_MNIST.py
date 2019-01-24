@@ -26,6 +26,8 @@ if __name__ == '__main__':
     # Init network
     generator = GAN_MNIST.Generator(input_size=noise_dim, output_size=28*28)
     discriminator = GAN_MNIST.Discriminator(input_size=28*28, output_size=1)
+    print(generator)
+    print(discriminator)
     if torch.cuda.is_available():
         generator = generator.cuda()
         discriminator = discriminator.cuda()
