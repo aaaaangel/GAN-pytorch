@@ -1,7 +1,7 @@
 import torch
 from torchvision import datasets, transforms
 
-from models import GAN_MNIST
+from models import DCGAN_MNIST
 from train import weights_init, train_GAN
 
 
@@ -11,10 +11,11 @@ if __name__ == '__main__':
     lr = 0.0002
     num_epochs = 100
     noise_dim = 100
+    img_size = 64
 
     # Init network
-    generator = GAN_MNIST.Generator(input_size=noise_dim, output_size=28*28)
-    discriminator = GAN_MNIST.Discriminator(input_size=28*28, output_size=1)
+    generator = DCGAN_MNIST.Generator(input_size=noise_dim)
+    discriminator = DCGAN_MNIST.Discriminator()
     print(generator)
     print(discriminator)
     if torch.cuda.is_available():
@@ -25,6 +26,7 @@ if __name__ == '__main__':
 
     # Load data
     transform = transforms.Compose([
+        transforms.Scale(img_size),
         transforms.ToTensor(),
         transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
     ])
@@ -32,4 +34,4 @@ if __name__ == '__main__':
         datasets.MNIST('data', train=True, download=True, transform=transform),
         batch_size=batch_size, shuffle=True)
 
-    train_GAN(generator, discriminator, train_loader, 'GAN_MNIST', num_epochs=100)
+    train_GAN(generator, discriminator, train_loader, 'DCGAN_MNIST', num_epochs=20)
