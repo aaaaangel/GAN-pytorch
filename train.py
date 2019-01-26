@@ -13,6 +13,11 @@ def weights_init(m):
     if isinstance(m, nn.Linear):
         init.xavier_uniform_(m.weight.data)
         m.bias.data.zero_()
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.ConvTranspose2d):
+        init.xavier_uniform_(m.weight.data)
+        if m.bias is not None:
+            m.bias.data.zero_()
+
 
 def train_GAN(generator, discriminator, train_loader, network_name, noise_dim=100, num_epochs=100, lr=0.0002, img_size=[28, 28]):
     # Init binary cross entropy loss function and Adam optimizer
