@@ -41,8 +41,7 @@ class Discriminator(nn.Module):
 
     def forward(self, input):
         # [N, 1, 64, 64]
-        if input.dim() != 4:
-            input = input.view(input.size(0), 1, 64, 64)
+        input = input.view(input.size(0), 1, 64, 64)
         output = F.leaky_relu(self.conv1(input), 0.2)                   # [N, d, 32, 32]
         output = F.leaky_relu(self.conv2_bn(self.conv2(output)), 0.2)   # [N, d*2, 16, 16]
         output = F.leaky_relu(self.conv3_bn(self.conv3(output)), 0.2)   # [N, d*4, 8, 8]

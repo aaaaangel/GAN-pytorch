@@ -34,4 +34,4 @@ if __name__ == '__main__':
         datasets.MNIST('data', train=True, download=True, transform=transform),
         batch_size=batch_size, shuffle=True)
 
-    train_GAN(generator, discriminator, train_loader, 'DCGAN_MNIST', num_epochs=20)
+    train_GAN(generator, discriminator, train_loader, 'DCGAN_MNIST', num_epochs=20, img_size=[64,64])

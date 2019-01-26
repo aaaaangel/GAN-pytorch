@@ -14,7 +14,7 @@ def weights_init(m):
         init.xavier_uniform_(m.weight.data)
         m.bias.data.zero_()
 
-def train_GAN(generator, discriminator, train_loader, network_name, noise_dim=100, num_epochs=100, lr=0.0002):
+def train_GAN(generator, discriminator, train_loader, network_name, noise_dim=100, num_epochs=100, lr=0.0002, img_size=[28, 28]):
     # Init binary cross entropy loss function and Adam optimizer
     loss = nn.BCELoss()
     g_optimizer = optim.Adam(generator.parameters(), lr=lr)
@@ -80,7 +80,7 @@ def train_GAN(generator, discriminator, train_loader, network_name, noise_dim=10
         if not os.path.isdir(results_dir):
             os.mkdir(results_dir)
         test_path = results_dir + network_name + str(epoch + 1).zfill(3) + '.png'
-        generate_grid_result(generator, test_path, input_noise=test_noise, epoch=epoch)
+        generate_grid_result(generator, test_path, input_noise=test_noise, epoch=epoch, img_size=img_size)
 
         time1 = time.time()
 
